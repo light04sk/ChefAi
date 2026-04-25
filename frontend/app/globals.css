@@ -48,38 +48,52 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* ── Saffron & Crimson Palette ── */
+  /* Crimson Red:   #C41E3A */
+  /* Burnt Orange:  #E05C1A  */
+  /* Saffron Gold:  #E8A020 */
+  /* Warm Saffron:  #F5C27A */
+  /* Ivory/Cream:   #FAF8F3  */
+
+  --background: #FAF8F3;
+  --foreground: oklch(0.14 0.004 49.75);
+
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.14 0.004 49.75);
+
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.14 0.004 49.75);
+
+  /* Primary → Deep Crimson */
+  --primary: #C41E3A;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: oklch(0.96 0.005 49.75);
+  --secondary-foreground: oklch(0.14 0.004 49.75);
+
+  --muted: oklch(0.97 0.003 49.75);
+  --muted-foreground: oklch(0.53 0.01 49.75);
+
+  --accent: #FFF5E6;
+  --accent-foreground: #C41E3A;
+
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  --border: oklch(0.92 0.004 49.75);
+  --input: oklch(0.92 0.004 49.75);
+  --ring: #C41E3A;
+
+  --radius: 0.75rem;
+
+  /* Custom spice palette variables for inline use */
+  --crimson: #C41E3A;
+  --burnt-orange: #E05C1A;
+  --saffron: #E8A020;
+  --saffron-light: #F5C27A;
+  --ivory: #FAF8F3;
+  --spice-dark: #100800;
+  --spice-mid: #1A0A00;
+  --spice-border: #2D1500;
 }
 
 .dark {
@@ -101,11 +115,6 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
