@@ -1,69 +1,117 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Utensils } from "lucide-react";
 import Link from "next/link";
 import useFetch from "@/hooks/use-fetch";
 import RecipeCard from "@/components/RecipeCard";
 
 export default function RecipeGrid({
-  type, // "category" or "cuisine"
-  value, // actual category/cuisine name
-  fetchAction, // server action to fetch meals
+  type,
+  value,
+  fetchAction,
   backLink = "/dashboard",
 }) {
   const { loading, data, fn: fetchMeals } = useFetch(fetchAction);
 
   useEffect(() => {
     if (value) {
-      // Capitalize first letter for API call
       const formattedValue = value.charAt(0).toUpperCase() + value.slice(1);
       fetchMeals(formattedValue);
     }
   }, [value]);
 
   const meals = data?.meals || [];
-  const displayName = value?.replace(/-/g, " "); // Convert "saudi-arabian" to "saudi arabian"
+  const displayName = value?.replace(/-/g, " ");
 
   return (
-    <div className="min-h-screen bg-stone-50 pt-14 pb-16 px-4">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            href={backLink}
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-orange-600 transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
-          </Link>
+    <div
+      className="min-h-screen py-16 px-4"
+      style={{ backgroundColor: "#faf7f2" }}
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Back link */}
+        <Link
+          href={backLink}
+          className="inline-flex items-center gap-2 text-sm font-semibold mb-10 transition-colors hover:opacity-70"
+          style={{ color: "#7a5c44" }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Link>
 
-          <h1 className="text-5xl md:text-6xl font-bold text-stone-900 capitalize tracking-tight leading-tight">
+        {/* Header */}
+        <div className="mb-14">
+          <span
+            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full mb-5"
+            style={{
+              backgroundColor: "#fff3e0",
+              color: "#c0392b",
+              border: "1px solid #f5c6a0",
+            }}
+          >
+            <Utensils className="w-3 h-3" />
+            {type === "cuisine" ? "Global Cuisines" : "Browse by Category"}
+          </span>
+
+          <h1
+            className="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight capitalize"
+            style={{ color: "#1a0a00" }}
+          >
             {displayName}{" "}
-            <span className="text-orange-600">
+            <span
+              className="italic"
+              style={{
+                background: "linear-gradient(90deg, #c0392b, #e67e22)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               {type === "cuisine" ? "Cuisine" : "Recipes"}
             </span>
           </h1>
 
           {!loading && meals.length > 0 && (
-            <p className="text-stone-600 mt-2">
+            <p className="text-lg font-light" style={{ color: "#7a5c44" }}>
               {meals.length} delicious {displayName}{" "}
-              {type === "cuisine" ? "dishes" : "recipes"} to try
+              {type === "cuisine" ? "dishes" : "recipes"} to explore
             </p>
           )}
         </div>
 
-        {/* Loading State */}
+        {/* Divider */}
+        <div
+          className="h-px mb-12"
+          style={{
+            background: "linear-gradient(to right, #c0392b, transparent)",
+          }}
+        />
+
+        {/* Loading */}
         {loading && (
-          <div className="flex flex-col justify-center items-center py-20">
-            <Loader2 className="w-10 h-10 text-orange-600 animate-spin mb-4" />
-            <p className="text-stone-500">Loading recipes...</p>
+          <div className="flex flex-col items-center justify-center py-28">
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
+              style={{
+                backgroundColor: "#fff3e0",
+                border: "1px solid #f5c6a0",
+              }}
+            >
+              <Loader2
+                className="w-8 h-8 animate-spin"
+                style={{ color: "#c0392b" }}
+              />
+            </div>
+            <p className="font-semibold" style={{ color: "#7a5c44" }}>
+              Loading recipes…
+            </p>
           </div>
         )}
 
-        {/* Meals Grid - Using RecipeCard */}
+        {/* Grid */}
         {!loading && meals.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {meals.map((meal) => (
               <RecipeCard key={meal.idMeal} recipe={meal} variant="grid" />
             ))}
@@ -72,20 +120,34 @@ export default function RecipeGrid({
 
         {/* Empty State */}
         {!loading && meals.length === 0 && (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">🍽️</div>
-            <h3 className="text-2xl font-bold text-stone-900 mb-2">
-              No recipes found
+          <div
+            className="rounded-3xl p-14 text-center"
+            style={{
+              backgroundColor: "#1a0a00",
+              border: "1px solid #2e1200",
+              boxShadow: "0 8px 40px rgba(192,57,43,0.12)",
+            }}
+          >
+            <div className="text-5xl mb-5">🍽️</div>
+            <h3 className="text-2xl font-black mb-3" style={{ color: "#fff" }}>
+              Nothing here yet.
             </h3>
-            <p className="text-stone-500 mb-6">
+            <p className="font-light mb-8" style={{ color: "#a87d5e" }}>
               We couldn&apos;t find any {displayName}{" "}
               {type === "cuisine" ? "dishes" : "recipes"}.
             </p>
             <Link href={backLink}>
-              <span className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold">
+              <button
+                className="inline-flex items-center gap-2 text-sm font-bold px-5 py-3 rounded-xl transition-opacity hover:opacity-90"
+                style={{
+                  background: "linear-gradient(135deg, #c0392b, #e67e22)",
+                  color: "#fff",
+                  boxShadow: "0 4px 20px rgba(192,57,43,0.4)",
+                }}
+              >
                 <ArrowLeft className="w-4 h-4" />
-                Go back to explore more
-              </span>
+                Back to exploring
+              </button>
             </Link>
           </div>
         )}
