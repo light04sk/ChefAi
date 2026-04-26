@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { Camera, PenLine, ScanLine } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePantryModal } from "@/components/pantry/addToPantry/usePantryModal";
 import ScanTab from "@/components/pantry/addToPantry/ScanTab";
@@ -41,19 +40,32 @@ export default function AddToPantryModal({ isOpen, onClose, onSuccess }) {
         @media (max-width: 640px) {
           [data-radix-dialog-overlay] { align-items: flex-end !important; }
           [data-radix-dialog-content] {
-            width: 100vw !important; max-width: 100vw !important;
-            margin: 0 !important; border-radius: 1.5rem 1.5rem 0 0 !important;
-            max-height: 92dvh !important; bottom: 0 !important;
-            top: auto !important; transform: none !important; left: 0 !important;
+            position: fixed !important;
+            left: 16px !important;
+            right: 16px !important;
+            bottom: 16px !important;
+            top: auto !important;
+            transform: none !important;
+            width: auto !important;
+            max-width: none !important;
+            margin: 0 !important;
+            border-radius: 1.5rem !important;
+            max-height: 92dvh !important;
           }
         }
       `}</style>
 
       <Dialog open={isOpen} onOpenChange={handleClose}>
         <DialogContent
-          className="w-full max-w-lg p-0 gap-0 rounded-3xl border-0 flex flex-col overflow-hidden"
-          style={{ backgroundColor: "#faf7f2", maxHeight: "min(88vh, 720px)" }}
+          className="p-0 gap-0 rounded-3xl border-0 flex flex-col overflow-hidden"
+          style={{
+            backgroundColor: "#faf7f2",
+            maxHeight: "min(88vh, 720px)",
+            width: "calc(100vw - 32px)",
+            maxWidth: "480px",
+          }}
         >
+          <DialogTitle className="sr-only">Stock Your Pantry</DialogTitle>
           {/* Header */}
           <div
             className="px-5 sm:px-7 pt-6 pb-5 flex-shrink-0"
