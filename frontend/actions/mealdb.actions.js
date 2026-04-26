@@ -1,6 +1,7 @@
 "use server";
 
-const MEALDB_BASE = "https://www.themealdb.com/api/json/v1/1";
+const MEALDB_API_KEY = process.env.MEALDB_API_KEY || "1";
+const MEALDB_BASE = `https://www.themealdb.com/api/json/v1/${MEALDB_API_KEY}`;
 
 // Get random recipe of the day
 export async function getRecipeOfTheDay() {
@@ -14,6 +15,12 @@ export async function getRecipeOfTheDay() {
     }
 
     const data = await response.json();
+
+    // ✅ Null check before accessing index
+    if (!data.meals || data.meals.length === 0) {
+      throw new Error("No recipe returned from MealDB");
+    }
+
     return {
       success: true,
       recipe: data.meals[0],
@@ -71,9 +78,15 @@ export async function getAreas() {
 // Get meals by category
 export async function getMealsByCategory(category) {
   try {
-    const response = await fetch(`${MEALDB_BASE}/filter.php?c=${category}`, {
-      next: { revalidate: 86400 }, // Cache for 24 hours
-    });
+    // ✅ Sanitize input before putting it in the URL
+    const safeCategory = encodeURIComponent(category);
+
+    const response = await fetch(
+      `${MEALDB_BASE}/filter.php?c=${safeCategory}`,
+      {
+        next: { revalidate: 86400 }, // Cache for 24 hours
+      },
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch meals");
@@ -94,7 +107,10 @@ export async function getMealsByCategory(category) {
 // Get meals by area
 export async function getMealsByArea(area) {
   try {
-    const response = await fetch(`${MEALDB_BASE}/filter.php?a=${area}`, {
+    // ✅ Sanitize input before putting it in the URL
+    const safeArea = encodeURIComponent(area);
+
+    const response = await fetch(`${MEALDB_BASE}/filter.php?a=${safeArea}`, {
       next: { revalidate: 86400 }, // Cache for 24 hours
     });
 
